@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+
+</head>
+
+<body>
+    <style>
+        body {
+            /* background-image: url('./capture3.jpg'); */
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            height: 100%;
+            width: 100%;
+        }
+
+        header {
+            background-image: url("./capture2.jpg");
+            background-size: cover;
+            position: relative;
+            height: 200px;
+            text-align: center;
+            /* background-color: black; */
+            color: white;
+            padding: 10px;
+        }
+
+        .abc {
+            
+            background-color: white;
+            color: black;
+            font-size: 400%;
+            font-weight: bold;
+            margin: 0 auto;
+            padding: 10px;
+            width: 50%;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .abc {
+                font-size: 150%;
+
+            }
+            header{
+                background-image: url("./Concept.jpg");
+
+            }
+
+            /* Small devices (portrait tablets and large phones) */
+            .col-4 {
+                width: 100%;
+
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .row {
+                --bs-gutter-x: 0;
+                margin-top: 10%;
+                margin-right: -10%
+            }
+
+            .list-group-item {}
+        }
+
+        .container {
+            margin: 2%;
+        }
+    </style>
+    <!-- http://api.openweathermap.org/data/2.5/forecast?q=toronto&appid=52d2d6127f7222fcbf7787044a62dcfe -->
+    <!-- ----- -->
+    <!-- http://api.openweathermap.org/data/2.5/uvi?lat=45.4112&lon=-75.6981&appid=166a433c57516f51dfab1f7edaed8413 -->
+
+    <!-- apikey: f00369dfa25e48f00f6407c2ae4046e4 -->
+    <!-- http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=f00369dfa25e48f00f6407c2ae4046e4 -->
+    <header>
+        <h1 class="abc">Weather Dashboard</h1>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h5>Search for a city:</h5>
+                <div>
+                    <input class="btn btn-outline-success me-2" type="search" aria-label="Search">
+                    <button onclick="getWeather()" class="btn btn-outline-success fas fa-search" type="submit">
+                        Search</button>
+                </div>
+
+                <ul class="list-group" style="margin-right:30px ; margin-top: 30px;">
+                    <li class="list-group-item disabled" aria-disabled="true">Search History</li>
+                </ul>
+            </div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="card border-secondary mb-3  h-100">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-3">
+                                    <h2 id="cityNameday1">
+                                    </h2>
+
+                                </div>
+                                <div class="col-3"> <img id="day1icon" src="" alt="City"
+                                        style="width: 50px;height: 50px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body text-secondary">
+                            <!-- <h5 class="card-title">Secondary card title</h5> -->
+                            <p id="temperatureday1" class="card-text">Temperature:</p>
+                            <p id="humidityday1" class="card-text">Humidity:</p>
+                            <p id="windSpeedday1" class="card-text">Wind Speed:</p>
+                            <p id="uviday1" class="card-text">UV Index:</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <h2>5-Day Forecast:</h2>
+                </div>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col">
+                        <div class="card ">
+                            <div class="card-body">
+                                <h5 class="card-title">8/16/2019</h5>
+                                <img id="day2icon" src="" class="card-img-top" alt="...">
+                                <p id="temperatureday2" class="card-text">temp:</p>
+                                <p id="humidityday2" class="card-text">Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card ">
+                            <div class="card-body">
+                                <h5 class="card-title">8/16/2019</h5>
+                                <img id="day3icon" src="..." class="card-img-top" alt="...">
+                                <p id="temperatureday3" class="card-text">temp:</p>
+                                <p id="humidityday3" class="card-text">Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card ">
+                            <div class="card-body">
+                                <h5 class="card-title">8/16/2019</h5>
+                                <img id="day4icon" src="..." class="card-img-top" alt="...">
+                                <p id="temperatureday4" class="card-text">temp:</p>
+                                <p id="humidityday4" class="card-text">Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card ">
+                            <div class="card-body">
+                                <h5 class="card-title">8/16/2019</h5>
+                                <img id="day5icon" src="..." class="card-img-top" alt="...">
+                                <p id="temperatureday5" class="card-text">temp:</p>
+                                <p id="humidityday5" class="card-text">Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card ">
+                            <div class="card-body">
+                                <h5 class="card-title">8/16/2019</h5>
+                                <img id="day6icon" src="..." class="card-img-top" alt="...">
+                                <p id="temperatureday6" class="card-text">temp:</p>
+                                <p id="humidityday6" class="card-text">Humidity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+
+    <script>
+
+
+        var apiurl1
+        var apiurl2
+        var weatherWeekly
+        var city
+        var longitude
+        var latitude
+        var longandlat
+        var uvi
+        var windspeed
+        var humidity
+        var temperature
+
+        async function getWeather() {
+            city = document.querySelector('.me-2').value
+
+            apiurl1 = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
+
+            // get the movie information
+            console.log(`... getting movie info for toronto`)
+            weatherWeekly = await fetch(apiurl1).then(r => r.json())
+            console.log(` .. fetched movie info: `, weatherWeekly)
+            longitude = weatherWeekly.city.coord.lon;
+            latitude = weatherWeekly.city.coord.lat;
+            apiurl2 = `http://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
+            longandlat = await fetch(apiurl2).then(r => r.json())
+            uvi = longandlat.value
+            windspeed = weatherWeekly.list[0].speed
+            // document.getElementById('cityNameday1').innerHTML = ``
+            document.getElementById('cityNameday1').innerHTML = `${weatherWeekly.city.name}`
+            document.getElementById('windSpeedday1').innerHTML = `Wind Speed: ${windspeed}`
+            document.getElementById('uviday1').innerHTML = `UV Index: ${uvi}`
+
+            for (i = 1; i < 7; i++) {
+                humidity = weatherWeekly.list[i - 1].humidity
+                temperature = (weatherWeekly.list[i - 1].temp.min + weatherWeekly.list[i - 1].temp.max) / 2
+                temperature = temperature.toFixed(2)
+                document.getElementById(`temperatureday${i}`).innerHTML = `Temp: ${temperature}°C`
+                document.getElementById(`humidityday${i}`).innerHTML = `Humidity: ${humidity}%`
+                document.getElementById(`day${i}icon`).src = `http://openweathermap.org/img/wn/${weatherWeekly.list[i - 1].weather[0].icon}@2x.png`
+            }
+
+            const cityName = document.createElement('button')
+            cityName.setAttribute('class', ` btn btn-light ${weatherWeekly.city.name}`)
+            cityName.setAttribute('id', 'deleted-when-cleared')
+            cityName.textContent = `${weatherWeekly.city.name}`
+            document.querySelector('.list-group').appendChild(cityName)
+
+
+            // // display it
+            // var movieView = document.querySelector('#movie-view')
+            // movieView.innerHTML = `
+            //   <div class="col-6 col-md-4 col-lg-3">
+            //     <div class="card">
+            //       <div class="card-header">${movieData.Title}</div>
+            //       <div class="card-body">
+            //         <p>Release Year: ${movieData.Year}</p>
+            //         <img src='${movieData.Poster}' style='width:100%;' />
+            //       </div>
+            //     </div>
+            //   </div>` + movieView.innerHTML
+        }
+
+//         window.onload = function(){                 To MAKE TEST CHANGE ON LOWER SCREEN
+// var x, y, trigger, screenSize;
+// screenSize = window.screen.availWidth;
+// trigger = 800; // you need to put in your own value here rather than 800
+// x = document.getElementById("HTML_id_of_vertical_div");
+// y = document.getElementById("HTML_id_of_horizontal_div");
+// if( screenSize < trigger){
+// x.style.display = "none";
+// y.style.display = "block"; //you may want to use another option other than block
+// }
+// else{
+// y.style.display = "none";
+// x.style.display = "block"; //you may want to use another option other than block
+// }
+// }
+
+// You probably need, by CSS or inline style declarations, to set the display property of the non-default\
+//  div to "none," otherwise people who don't have javascript enabled will see both sets of buttons.
+    </script>
+</body>
+
+</html>
