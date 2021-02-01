@@ -216,7 +216,7 @@
         async function getWeather() {
             city = document.querySelector('.me-2').value
 
-            apiurl1 = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
+            apiurl1 = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
 
             // get the movie information
             console.log(`... getting movie info for toronto`)
@@ -224,7 +224,7 @@
             console.log(` .. fetched movie info: `, weatherWeekly)
             longitude = weatherWeekly.city.coord.lon;
             latitude = weatherWeekly.city.coord.lat;
-            apiurl2 = `http://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
+            apiurl2 = `https://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
             longandlat = await fetch(apiurl2).then(r => r.json())
             uvi = longandlat.value
             windspeed = weatherWeekly.list[0].speed
