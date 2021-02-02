@@ -8,7 +8,7 @@ body {
 }
 
 header {
-    background-image: url("./capture2.jpg");
+    background-image: url("./Assets/capture2.jpg");
     background-size: cover;
     position: relative;
     height: 200px;
@@ -42,7 +42,7 @@ header {
     }
 
     header {
-        background-image: url("./Concept.jpg");
+        background-image: url("./Assets/Concept.jpg");
 
     }
 
