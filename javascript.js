@@ -10,10 +10,11 @@ var windspeed
 var humidity
 var temperature
 var saveDays = []
+var newCity
 async function getWeather() {
-    if(!city){
+    // if(!city){
+    // }
     city = document.querySelector('.me-2').value
-    }
 
     apiurl1 = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
 
@@ -48,23 +49,29 @@ async function getWeather() {
         //     }
         //     else { console.log('llllol') }
         // }
-        for (var d = 0; d < JSON.parse(localStorage.getItem('saveDays')).length; d++) {
-            if (saveDays.includes(`${city}`)) {
-                console.log('Already There')
-            }
-            else {
-                const cityName = document.createElement('button')
-                cityName.setAttribute('class', ` btn btn-light ${weatherWeekly.city.name}`)
-                cityName.setAttribute('id', `${weatherWeekly.city.name}`)
-                cityName.textContent = `${weatherWeekly.city.name}`
-                document.querySelector('.list-group').appendChild(cityName)
-                document.getElementById(`${weatherWeekly.city.name}`).onclick = function () { testing(this.id) }
+        // for (var d = 0; d < JSON.parse(localStorage.getItem('saveDays')).length; d++) {
+        //     if (saveDays.includes(`${city}`)) {
+        //         console.log('Already There')
+        //     }
+        //     else {
+        //         const cityName = document.createElement('button')
+        //         cityName.setAttribute('class', ` btn btn-light ${weatherWeekly.city.name}`)
+        //         cityName.setAttribute('id', `${weatherWeekly.city.name}`)
+        //         cityName.textContent = `${weatherWeekly.city.name}`
+        //         document.querySelector('.list-group').appendChild(cityName)
+        //         document.getElementById(`${weatherWeekly.city.name}`).onclick = function () { testing(this.id) }
 
-                saveDays.push(`${weatherWeekly.city.name}`)
-                localStorage.setItem('saveDays', JSON.stringify(saveDays));
-            }
-        }
-
+               
+        //     }
+        // }
+        const cityName = document.createElement('button')
+        cityName.setAttribute('class', ` btn btn-light ${weatherWeekly.city.name}`)
+        cityName.setAttribute('id', `${weatherWeekly.city.name}`)
+        cityName.textContent = `${weatherWeekly.city.name}`
+        document.querySelector('.list-group').appendChild(cityName)
+        document.getElementById(`${weatherWeekly.city.name}`).onclick = function () { testing(this.id) }
+        saveDays.push(`${weatherWeekly.city.name}`)
+        localStorage.setItem('saveDays', JSON.stringify(saveDays));
 
     }
 }
@@ -82,7 +89,7 @@ if (localStorage.getItem('saveDays')) {
         cityName.textContent = `${saveDays[i]}`
         document.querySelector('.list-group').appendChild(cityName)
         console.log(`${saveDays[i]}`)
-        document.getElementById(`${saveDays[i]}`).onclick = function () { testing(this.id) }
+        document.getElementById(`${saveDays[i]}`).onclick = function () { newCity = saveDays[i] ;testing(clicked_id) }
 
     }
 }
