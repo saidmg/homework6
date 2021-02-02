@@ -38,7 +38,7 @@
         }
 
         .abc {
-            
+
             background-color: white;
             color: black;
             font-size: 400%;
@@ -59,7 +59,8 @@
                 font-size: 150%;
 
             }
-            header{
+
+            header {
                 background-image: url("./Concept.jpg");
 
             }
@@ -81,6 +82,10 @@
             }
 
             .list-group-item {}
+        }
+
+        .hidden {
+            display: none;
         }
 
         .container {
@@ -111,7 +116,7 @@
                     <li class="list-group-item disabled" aria-disabled="true">Search History</li>
                 </ul>
             </div>
-            <div class="col-8">
+            <div id="toggleatstart" class="col-8 hidden">
                 <div class="row">
                     <div class="card border-secondary mb-3  h-100">
                         <div class="card-header">
@@ -126,7 +131,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body text-secondary">
+                        <div class="card-body text-secondary ">
                             <!-- <h5 class="card-title">Secondary card title</h5> -->
                             <p id="temperatureday1" class="card-text">Temperature:</p>
                             <p id="humidityday1" class="card-text">Humidity:</p>
@@ -212,57 +217,82 @@
         var windspeed
         var humidity
         var temperature
-
+        var saveDays = []
         async function getWeather() {
             city = document.querySelector('.me-2').value
 
+           
             apiurl1 = `https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
 
             // get the movie information
             console.log(`... getting movie info for toronto`)
             weatherWeekly = await fetch(apiurl1).then(r => r.json())
             console.log(` .. fetched movie info: `, weatherWeekly)
-            longitude = weatherWeekly.city.coord.lon;
-            latitude = weatherWeekly.city.coord.lat;
-            apiurl2 = `https://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
-            longandlat = await fetch(apiurl2).then(r => r.json())
-            uvi = longandlat.value
-            windspeed = weatherWeekly.list[0].speed
-            // document.getElementById('cityNameday1').innerHTML = ``
-            document.getElementById('cityNameday1').innerHTML = `${weatherWeekly.city.name}`
-            document.getElementById('windSpeedday1').innerHTML = `Wind Speed: ${windspeed}`
-            document.getElementById('uviday1').innerHTML = `UV Index: ${uvi}`
+            if (weatherWeekly.cod != 404) {
+                document.getElementById('toggleatstart').classList.remove('hidden')
+                longitude = weatherWeekly.city.coord.lon;
+                latitude = weatherWeekly.city.coord.lat;
+                apiurl2 = `https://api.openweathermap.org/data/2.5/uvi?lat=${latitude}&lon=${longitude}&appid=166a433c57516f51dfab1f7edaed8413&units=metric`
+                longandlat = await fetch(apiurl2).then(r => r.json())
+                uvi = longandlat.value
+                windspeed = weatherWeekly.list[0].speed
+                // document.getElementById('cityNameday1').innerHTML = ``
+                document.getElementById('cityNameday1').innerHTML = `${weatherWeekly.city.name}`
+                document.getElementById('windSpeedday1').innerHTML = `Wind Speed: ${windspeed}`
+                document.getElementById('uviday1').innerHTML = `UV Index: ${uvi}`
 
-            for (i = 1; i < 7; i++) {
-                humidity = weatherWeekly.list[i - 1].humidity
-                temperature = (weatherWeekly.list[i - 1].temp.min + weatherWeekly.list[i - 1].temp.max) / 2
-                temperature = temperature.toFixed(2)
-                document.getElementById(`temperatureday${i}`).innerHTML = `Temp: ${temperature}°C`
-                document.getElementById(`humidityday${i}`).innerHTML = `Humidity: ${humidity}%`
-                document.getElementById(`day${i}icon`).src = `http://openweathermap.org/img/wn/${weatherWeekly.list[i - 1].weather[0].icon}@2x.png`
+                for (i = 1; i < 7; i++) {
+                    humidity = weatherWeekly.list[i - 1].humidity
+                    temperature = (weatherWeekly.list[i - 1].temp.min + weatherWeekly.list[i - 1].temp.max) / 2
+                    temperature = temperature.toFixed(2)
+                    document.getElementById(`temperatureday${i}`).innerHTML = `Temp: ${temperature}°C`
+                    document.getElementById(`humidityday${i}`).innerHTML = `Humidity: ${humidity}%`
+                    document.getElementById(`day${i}icon`).src = `http://openweathermap.org/img/wn/${weatherWeekly.list[i - 1].weather[0].icon}@2x.png`
+                }
+                for (var t = 1; t < document.querySelector('ul').children.length; t++) {
+                    if (city === document.querySelector('ul').children[t].textContent) {
+                        console.log('lol')
+                    }
+                    else { console.log('llllol') }
+                }
+
+                const cityName = document.createElement('button')
+                cityName.setAttribute('class', ` btn btn-light ${weatherWeekly.city.name}`)
+                cityName.setAttribute('id', `${weatherWeekly.city.name}`)
+                cityName.textContent = `${weatherWeekly.city.name}`
+                document.querySelector('.list-group').appendChild(cityName)
+                document.getElementById(`${weatherWeekly.city.name}`).onclick = function () { testing(this.id) }
+
+                saveDays.push(`${weatherWeekly.city.name}`)
+                localStorage.setItem('saveDays', JSON.stringify(saveDays));
             }
-
-            const cityName = document.createElement('button')
-            cityName.setAttribute('class', ` btn btn-light ${weatherWeekly.city.name}`)
-            cityName.setAttribute('id', 'deleted-when-cleared')
-            cityName.textContent = `${weatherWeekly.city.name}`
-            document.querySelector('.list-group').appendChild(cityName)
-
-
-            // // display it
-            // var movieView = document.querySelector('#movie-view')
-            // movieView.innerHTML = `
-            //   <div class="col-6 col-md-4 col-lg-3">
-            //     <div class="card">
-            //       <div class="card-header">${movieData.Title}</div>
-            //       <div class="card-body">
-            //         <p>Release Year: ${movieData.Year}</p>
-            //         <img src='${movieData.Poster}' style='width:100%;' />
-            //       </div>
-            //     </div>
-            //   </div>` + movieView.innerHTML
         }
 
+
+
+        // }
+        // }
+
+        if (localStorage.getItem('saveDays')) {
+            var retrievedObject = localStorage.getItem('saveDays');
+            saveDays = JSON.parse(retrievedObject)
+            for (var i = 0; i < saveDays.length; i++) {
+                const cityName = document.createElement('button')
+                cityName.setAttribute('class', ` btn btn-light ${saveDays[i]}`)
+                cityName.setAttribute('id', `${saveDays[i]}`)
+                cityName.textContent = `${saveDays[i]}`
+                document.querySelector('.list-group').appendChild(cityName)
+                console.log(`${saveDays[i]}`)
+                document.getElementById(`${saveDays[i]}`).onclick = function () { testing(this.id) }
+
+            }
+        }
+
+        function testing(clicked_id) {
+            city = clicked_id
+            getWeather()
+
+        }
 //         window.onload = function(){                 To MAKE TEST CHANGE ON LOWER SCREEN
 // var x, y, trigger, screenSize;
 // screenSize = window.screen.availWidth;
