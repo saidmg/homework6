@@ -11,6 +11,7 @@ Used the [OpenWeather API](https://openweathermap.org/api) to retrieve weather d
 # Sample Pictures
 * Screenshots are available inside ./assets/ for more details
 ![GitHub Logo](/Assets/Capture.JPG)
+![GitHub Logo](/Assets/Capture1.JPG)
 
 
 # URLS

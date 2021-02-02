@@ -73,7 +73,7 @@ async function getWeather() {
         saveDays.push(`${weatherWeekly.city.name}`)
         localStorage.setItem('saveDays', JSON.stringify(saveDays));
 
-    }
+    }timeFunction()
 }
 
 // }
@@ -99,3 +99,30 @@ function testing(clicked_id) {
     getWeather()
 
 }
+
+function timeFunction() {
+    var d = new Date();
+    var weekday = new Array(7);
+   
+    weekday[1] = "Monday";
+    weekday[2] = "Tuesday";
+    weekday[3] = "Wednesday";
+    weekday[4] = "Thursday";
+    weekday[5] = "Friday";
+    weekday[6] = "Saturday";
+    weekday[7] = "Sunday";
+    var day1 = weekday[d.getDay()];
+    var day2 = weekday[d.getDay()+1];
+    var day3 = weekday[d.getDay()+2];
+    var day4 = weekday[d.getDay()+3];
+    var day5 = weekday[d.getDay()+4];
+    var day6 = weekday[d.getDay()+5];
+
+    document.getElementById("timeday2").innerHTML = day2;
+    document.getElementById("timeday3").innerHTML = day3;
+    document.getElementById("timeday4").innerHTML = day4;
+    document.getElementById("timeday5").innerHTML = day5;
+    document.getElementById("timeday6").innerHTML = day6;
+  
+    
+  }
